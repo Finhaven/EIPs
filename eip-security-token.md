@@ -1,30 +1,29 @@
-This is the suggested template for new EIPs.
-
-Note that an EIP number will be assigned by an editor. When opening a pull request to submit your EIP, please use an abbreviated title in the filename, `eip-draft_title_abbrev.md`.
 
 ## Preamble
 
     EIP: <to be assigned>
-    Title: <EIP title>
+    Title: Security Token
     Author: <list of authors' names and optionally, email addresses>
-    Type: <Standard Track | Informational | Meta>
-    Category (*only required for Standard Track): <Core | Networking | Interface | ERC> 
+    Type: Standard Track 
+    Category: ERC
     Status: Draft
     Created: <date created on, in ISO 8601 (yyyy-mm-dd) format>
     Requires (*optional): <EIP number(s)>
     Replaces (*optional): <EIP number(s)>
 
-The title should be 44 characters or less.
 
 ## Simple Summary
-"If you can't explain it simply, you don't understand it well enough." Provide a simplified and layman-accessible explanation of the EIP.
+
+Tokens can be used to represent ownership of regulated securities that require transfer restrictions.  We propose a common interface to support the case of security tokens allowing user interface designs and other smart contracts to become aware of these restrictions. 
 
 ## Abstract
-A short (~200 word) description of the technical issue being addressed.
+
+  ...
 
 ## Motivation
-The motivation is critical for EIPs that want to change the Ethereum protocol. It should clearly explain why the existing protocol specification is inadequate to address the problem that the EIP solves. EIP submissions without sufficient motivation may be rejected outright.
 
+Although token contracts that implement ERC20 (or other token standards) can implement restrictions by way of checks in the transfer function (throwing an error if they are not met), there is no agreed mechanism to communicate these restrictions.  In the current environment, a transfer would simply fail without reason, leading to ad-hoc mechanisms to communicate these restrictions to the user.  To enable a new economy of regulated security tokens, we need a standard mechanism for, say, an exchange to determine who is allowed to buy a particular token.  
+    
 ## Specification
 The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations for any of the current Ethereum platforms (cpp-ethereum, go-ethereum, parity, ethereumj, ethereumjs, ...). 
 
