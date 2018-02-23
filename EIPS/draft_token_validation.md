@@ -167,7 +167,10 @@ requiring different validations for different, or just a single `Validator`.
 The potential use cases are too varied to provide a single unified set of methods.
 We have provided a set of example contracts [here](some.link) that may be inherited from for common use cases.
 
-By only defining the opaque validation check, this standard is widely compatible with
+The status codes in the `uint8` returns are unspecified. Any status code scheme
+may be used, though a general status code proposal is fortcoming.
+
+By only defining the validation check, this standard is widely compatible with
 ERC-20, EIP-721, EIP-777, future token standards, centralized and decentralized exchanges,
 and so on.
 
