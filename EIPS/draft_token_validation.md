@@ -2,7 +2,7 @@
 
     EIP: <to be assigned>
     Title: Token Validation
-    Author: Tom Carchrae, Gleb Naumenko, Brooklyn Zelenka
+    Author: Tom Carchrae<tom@finhaven.com>, Gleb Naumenko<gleb@finhaven.com>, Brooklyn Zelenka<brooklyn@finhaven.com>
     Type: Standard Track
     Category: ERC
     Status: Draft
@@ -25,8 +25,8 @@ but may also include time-based spend limits, total volume of transactions, and 
 
 Regulators and sanctioned third-party compliance agencies need some way to link
 off-chain compliance information such as identity and residency to an on-chain service.
-The application of this design is broader than legal regulation, encompasing all manner
-of business logic permissions for the creation, mangement, and trading of tokens.
+The application of this design is broader than legal regulation, encompassing all manner
+of business logic permissions for the creation, management, and trading of tokens.
 
 ## Specification
 
@@ -131,10 +131,11 @@ By restricting ourselves to token transfers (ex. ERC20 or EIP-777), we can make
 assumptions about the use cases our validators will need to handle, and can make
 the API both small, useful, and extensible.
 
-The events are fired by the calling token. Since `Validator`s may aggregate or delagate
-to other `Validator`s, it would generate a lot of useless events were it the `Validator`'s responsability.
-This is also the reason why we include the `token` in the `call/4` arguments:
-a `Validator` cannot rely on `msg.sender` to determine the token that it's about.
+The events are fired by the calling token. Since `Validator`s may aggregate or delegate
+to other `Validator`s, it would generate a lot of useless events were it the
+`Validator`'s responsibility. This is also the reason why we include the `token`
+in the `call/4` arguments: a `Validator` cannot rely on `msg.sender` to determine
+the token that the call is concerning.
 
 We have also seen a similar design from [R-Token](https://github.com/harborhq/r-token) that uses an additional field: `spender`.
 While there are potential use cases for this, it's not widely used enough to justify passing
@@ -152,14 +153,14 @@ function approve(address spender, uint amount) public returns (bool success) {
 }
 ```
 
-A second `check/2` function is also required, that is mor general-purpose, and does not
+A second `check/2` function is also required, that is more general-purpose, and does not
 specify a transfer amount or recipient. This is intended for general checks,
-such as checking roles (admin, owner, &c), or ifa user is on a simple whitelist.
+such as checking roles (admin, owner, &c), or if a user is on a simple whitelist.
 You may still use `check/4`, but passing dummy data just to satisfy a function contract
 is generally frowned upon.
 
 We have left the decision to make associated `Validator` addresses public, private, or hardcoded
-up to the implementer. The proposed deisgn does not include a centralized registry.
+up to the implementer. The proposed design does not include a centralized registry.
 It also does not include an interface for a `Validated` contract.
 A token may require one or many `Validator`s for different purposes,
 requiring different validations for different, or just a single `Validator`.
