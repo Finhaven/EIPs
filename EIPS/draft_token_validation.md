@@ -2,14 +2,14 @@
 
     EIP: <to be assigned>
     Title: Token Validation
-    Author: Tom Carchrae<tom@finhaven.com>, Gleb Naumenko<gleb@finhaven.com>, Brooklyn Zelenka<brooklyn@finhaven.com>
+    Author: Brooklyn Zelenka<brooklyn@finhaven.com>, Tom Carchrae<tom@finhaven.com>, Gleb Naumenko<gleb@finhaven.com>
     Type: Standard Track
     Category: ERC
     Status: Draft
     Created: 2018-02-14
 
 ## Simple Summary
-A protocol for services providing financial transaction validation.
+A protocol for services providing token ownership and transfer validation.
 
 ## Abstract
 This standard provides a registry contract method for authorizing token transfers.
@@ -36,7 +36,7 @@ of business logic permissions for the creation, management, and trading of token
 interface TokenValidator {
   function check(
     address _token,
-    address _user
+    address _address
   ) public returns(uint8 result)
 
   function check(
@@ -52,11 +52,11 @@ interface TokenValidator {
 
 ##### check/2
 
-`function check(address token, address user) public returns (uint8 resultCode)`
+`function check(address _token, address _user) public returns (uint8 _resultCode)`
 
 > parameters
-> * `token`: the token under review
-> * `user`: the user to check
+> * `_token`: the token under review
+> * `_user`: the user to check
 >
 > *returns* an 8-bit status code
 
@@ -65,10 +65,10 @@ interface TokenValidator {
 `function check(address token, address from, address to, uint256 amount) public returns (uint8 resultCode)`
 
 > parameters
-> * `token`: the token under review
-> * `from`: in the case of a transfer, who is relinquishing token ownership
-> * `to`: in the case of a transfer, who is accepting token ownership
-> * `amount`: The number of tokens being transferred
+> * `_token`: the token under review
+> * `_from`: in the case of a transfer, who is relinquishing token ownership
+> * `_to`: in the case of a transfer, who is accepting token ownership
+> * `_amount`: The number of tokens being transferred
 >
 > *returns* an 8-bit status code
 
