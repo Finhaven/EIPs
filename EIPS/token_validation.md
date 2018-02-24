@@ -36,7 +36,7 @@ of business logic permissions for the creation, management, and trading of token
 interface TokenValidator {
   function check(
     address _token,
-    address _address
+    address _subject
   ) public returns(uint8 result)
 
   function check(
@@ -52,11 +52,11 @@ interface TokenValidator {
 
 ##### check/2
 
-`function check(address _token, address _user) public returns (uint8 _resultCode)`
+`function check(address _token, address _subject) public returns (uint8 _resultCode)`
 
 > parameters
 > * `_token`: the token under review
-> * `_user`: the user to check
+> * `_subject`: the user or contract to check
 >
 > *returns* an 8-bit status code
 
@@ -77,7 +77,7 @@ interface TokenValidator {
 ```solidity
 interface ValidatedToken {
   event Validation(
-    address indexed user,
+    address indexed subject,
     uint8   indexed result
   )
 
@@ -94,12 +94,12 @@ interface ValidatedToken {
 
 ##### Validation/2
 
-`event Validation(address indexed user, uint8 indexed resultCode)`
+`event Validation(address indexed subject, uint8 indexed resultCode)`
 
 This event MUST be fired on return from a call to a `TokenValidator.check/2`.
 
 > parameters
-> * `user`: the user to check
+> * `subject`: the user or contract that was checked
 > * `resultCode`: a status code
 
 
