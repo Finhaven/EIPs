@@ -143,7 +143,7 @@ a dummy value along with every call. Instead, such a call would look more like t
 
 ```solidity
 function approve(address spender, uint amount) public returns (bool success) {
-    if(validator.check(this, msg.sender, spender, amount) == okStatusCode) {
+    if (validator.check(this, msg.sender, spender, amount) == okStatusCode) {
         allowed[msg.sender][spender] = tokens;
         Approval(msg.sender, spender, tokens);
         return true;
