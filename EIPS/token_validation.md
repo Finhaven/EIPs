@@ -143,21 +143,19 @@ a dummy value along with every call. Instead, such a call would look more like t
 
 ```solidity
 function approve(address spender, uint amount) public returns (bool success) {
-    if(validator.check(this, msg.sender, spender, amount) == !okStatusCode) {
+    if(validator.check(this, msg.sender, spender, amount) == okStatusCode) {
+        allowed[msg.sender][spender] = tokens;
+        Approval(msg.sender, spender, tokens);
+        return true;
+    } else {
         return false;
-    };
-
-    allowed[msg.sender][spender] = tokens;
-    Approval(msg.sender, spender, tokens);
-    return true;
+    }
 }
 ```
 
 A second `check/2` function is also required, that is more general-purpose, and does not
 specify a transfer amount or recipient. This is intended for general checks,
 such as checking roles (admin, owner, &c), or if a user is on a simple whitelist.
-You may still use `check/4`, but passing dummy data just to satisfy a function contract
-is generally frowned upon.
 
 We have left the decision to make associated `Validator` addresses public, private, or hardcoded
 up to the implementer. The proposed design does not include a centralized registry.
