@@ -18,13 +18,13 @@ If you can't explain it simply, you don't understand it well enough." Provide a 
 A short (~200 word) description of the technical issue being addressed.
 
 ## Motivation
-## Autonomy
+### Autonomy
 
 Smart contracts are largely intended to be autonomous. While each contract may
 define a specific interface, having a common set of semantic codes can help
 developers write code that can react appropriately to various situations.
 
-## Semantically Rich
+### Semantically Density
 
 HTTP status codes are widely used for this purpose. BEAM languages use atoms
 and tagged tuples to signify much the same information. Both provide a lot of
@@ -34,7 +34,7 @@ that needs to decide what to do next.
 ESCs convey a much richer set of information than booleans,
 and are able to be reacted to autonomously unlike arbitrary strings.
 
-## User Feedback
+### User Feedback
 
 Since status codes are finite and known in advance, we can provide global,
 human-readable sets of status messages. These may also be translated into any language,
@@ -51,13 +51,11 @@ The technical specification should describe the syntax and semantics of any new 
 <!--The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.-->
 The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.-->
 
-## Test Cases
-<!--Test cases for an implementation are mandatory for EIPs that are affecting consensus changes. Other EIPs can choose to include links to test cases if applicable.-->
-Test cases for an implementation are mandatory for EIPs that are affecting consensus changes. Other EIPs can choose to include links to test cases if applicable.
-
 ## Implementation
 <!--The implementations must be completed before any EIP is given status "Final", but it need not be completed before the EIP is accepted. While there is merit to the approach of reaching consensus on the specification and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.-->
 The implementations must be completed before any EIP is given status "Final", but it need not be completed before the EIP is accepted. While there is merit to the approach of reaching consensus on the specification and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.
+
+https://github.com/Finhaven/EthereumStatusCodes
 
 ## Copyright
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
