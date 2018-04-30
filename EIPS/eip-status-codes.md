@@ -61,7 +61,7 @@ function isInt(uint num) public pure returns (byte status) {
 
 // Code and value
 
-uint8 counter;
+uint8 private counter;
 
 function safeIncrement(uint8 interval) public returns (byte status, uint8 newCounter) {
     uint8 updated = counter + interval;
