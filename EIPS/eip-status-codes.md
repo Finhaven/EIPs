@@ -9,11 +9,15 @@ created: 2018-05-04
 ---
 
 ## Simple Summary
-<!--"If you can't explain it simply, you don't understand it well enough." Provide a simplified and layman-accessible explanation of the EIP.-->
-If you can't explain it simply, you don't understand it well enough." Provide a simplified and layman-accessible explanation of the EIP.
+
+Broadly applicable status codes for Ethereum smart contracts.
 
 ## Abstract
-Broadly applicable status codes for Ethereum smart contracts
+
+This standard provides a common set of Ethereum status codes (ESC)
+in the same vein as HTTP statuses. This provides a shared contextual language
+to allow smart contracts to react to situations autonomously,
+expose localized error messages to users, and so on.
 
 ## Motivation
 
@@ -169,14 +173,45 @@ AwesomeCoin                 DEX                     TraderBot
 ```
 
 ## Rationale
-<!--The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.-->
-The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.-->
+
+### Encoding
+
+ESCs are encoded as a `byte`. Hex values break nicely into high and low nibbles:
+`category` and `reason`. For instance, `hex"01"` stands for general success
+and `hex"00"` for general failure.
+
+`byte` is quite lightweight, and can be easily packed with multiple codes into
+a `bytes32` (or similar) if desired. It is also easily interoperable with `uint8`,
+cast from `enum`s, and so on.
+
+Other schemes have been explored, including `bytes32` and `uint8`. They worked reasonably
+well, but not as cleanly. `uint8` feels much closer to HTTP status codes,
+does not break as cleanly as a square table (256 doesn't look as nice in base 10).
+
+### Human Readable
+
+Developers should not be required to memorize 256 codes. However, they break nicely into a table.
+Cognitive load is lowered by organizing the table into categories and reasons.
+`0x10` and `0x11` belong to the same category, and `0x04` shares a reason with `0x24`
+
+While this repository includes helper enums, we have found working directly in
+the hex values to be quite natural. ESC `0x10` is just as comfortable as HTTP 401, for example.
+
+### Extensiblilty
+
+The `0xA` category is reserved for application-specific statuses.
+In the case that 256 codes become insufficient, `bytes1` my be embedded in larger byte arrays.
+
+### EVM Codes
+
+The EVM also returns a status code in transactions; specifically `0x00` and `0x01`.
+This proposal both matches the meanings of those two codes, and could later be used
+at the EVM level.
 
 ## Implementation
-<!--The implementations must be completed before any EIP is given status "Final", but it need not be completed before the EIP is accepted. While there is merit to the approach of reaching consensus on the specification and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.-->
-The implementations must be completed before any EIP is given status "Final", but it need not be completed before the EIP is accepted. While there is merit to the approach of reaching consensus on the specification and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.
 
-https://github.com/Finhaven/EthereumStatusCodes
+Reference cases and helper library can be found [here](https://github.com/Finhaven/EthereumStatusCodes)
 
 ## Copyright
+
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
