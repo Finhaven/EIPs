@@ -210,9 +210,22 @@ and `hex"00"` for general failure.
 a `bytes32` (or similar) if desired. It is also easily interoperable with `uint8`,
 cast from `enum`s, and so on.
 
-Other schemes have been explored, including `bytes32` and `uint8`. They worked reasonably
-well, but not as cleanly. `uint8` feels much closer to HTTP status codes,
-does not break as evenly as a square table (256 doesn't look as nice in base 10).
+#### Alternatives
+
+Alternate schemes include `bytes32` and `uint8`. While these work reasonably
+well, they have drawbacks.
+
+`uint8` feels even more similar to HTTP status codes, and enums don't require
+as much casting. However does not break as evenly as a square table
+(256 doesn't look as nice in base 10).
+
+Packing multiple codes into a single `bytes32` is nice in theory, but poses additional
+challenges. Unused space may be interpeted as `0x00 Failure`, you can only efficiently
+pack four codes at once, and there is a challenge in ensuring that code combinations
+are sensible. Forcing four codes into a packed representation encourages multiple
+status codes to be returned, which is often more information than strictly nessesary.
+This can lead to paradoxical results (ex `0x00` and `0x01` together),
+or greater resorces allocated to interpreting 256^4 (4.2 billion) permutations.
 
 ### Multiple Returns
 
