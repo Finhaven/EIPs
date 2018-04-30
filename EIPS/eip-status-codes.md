@@ -2,7 +2,6 @@
 eip: <to be assigned>
 title: Status Codes
 author: Brooklyn Zelenka (@expede) <brooklyn@finhaven.com>, Tom Carchrae (@carchrae) <tom@finhaven.com>, Gleb Naumenko <gleb@finhaven.com> (@naumenkogs)
-discussions-to: <email address>
 status: Draft
 type: Standards Track
 category: ERC
@@ -14,17 +13,17 @@ created: 2018-05-04
 If you can't explain it simply, you don't understand it well enough." Provide a simplified and layman-accessible explanation of the EIP.
 
 ## Abstract
-<!--A short (~200 word) description of the technical issue being addressed.-->
-A short (~200 word) description of the technical issue being addressed.
+Broadly applicable status codes for Ethereum smart contracts
 
 ## Motivation
+
 ### Autonomy
 
 Smart contracts are largely intended to be autonomous. While each contract may
 define a specific interface, having a common set of semantic codes can help
 developers write code that can react appropriately to various situations.
 
-### Semantically Density
+### Semantic Density
 
 HTTP status codes are widely used for this purpose. BEAM languages use atoms
 and tagged tuples to signify much the same information. Both provide a lot of
@@ -44,8 +43,130 @@ We also see a desire for this [in transactions](http://eips.ethereum.org/EIPS/ei
 and there's no reason that ESCs couldn't be used by the EVM itself.
 
 ## Specification
-<!--The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations for any of the current Ethereum platforms (go-ethereum, parity, cpp-ethereum, ethereumj, ethereumjs, and [others](https://github.com/ethereum/wiki/wiki/Clients)).-->
-The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations for any of the current Ethereum platforms (go-ethereum, parity, cpp-ethereum, ethereumj, ethereumjs, and [others](https://github.com/ethereum/wiki/wiki/Clients)).
+
+This ERC specifies codes, but not the format of exchange. For instance,
+they may be returned as a single value, apart of a data structure (ex. a call stack),
+in a variadic return, or packed into a byte array.
+
+### Code Table
+
+| X. Low Nibble                     | 0. Generic              | 10. Permission                | 20. Find/Match/&c       | 30. Negotiation / Offers         | 40. Availability                 | 50. | 60. | 70. | 80. | 90. | A0. | B0. | C0. | D0. | E0. Cryptography                    | F0. Off Chain                                     |
+|-----------------------------------|-------------------------|-------------------------------|-------------------------|----------------------------------|----------------------------------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-------------------------------------|---------------------------------------------------|
+| 0. Failure                        | 0x00 Failure            | 0x10 Disallowed               | 0x20 Not Found          | 0x30 Other Party Disagreed       | 0x40 Unavailable or Expired      |     |     |     |     |     |     |     |     |     | 0xE0 Decrypt Failure                | 0xF0 Off Chain Failure                            |
+| 1. Success                        | 0x01 Success            | 0x11 Allowed                  | 0x21 Found              | 0x31 Other Party Agreed          | 0x41 Available                   |     |     |     |     |     |     |     |     |     | 0xE1 Decrypt Success                | 0xF1 Off Chain Success                            |
+| 2. Accepted / Started             | 0x02 Accepted / Started | 0x12 Requested Permission     | 0x22 Match Request Sent | 0x32 Sent Offer                  |                                  |     |     |     |     |     |     |     |     |     | 0xE2 Signed                         | 0xF2 Off Chain Process Started                    |
+| 3. Awaiting Others                | 0x03 Awaiting           | 0x13 Awaiting Permission      | 0x23 Awaiting Match     | 0x33 Awaiting Their Ratification | 0x43 Not Yet Available           |     |     |     |     |     |     |     |     |     | 0xE3 Other Party Signature Required | 0xF3 Awaiting Off Chain Completion                |
+| 4. Action Required / Awaiting You | 0x04 Action Required    | 0x14 Awaiting Your Permission |                         | 0x34 Awaiting Your Ratification  | 0x44 Awaiting Your Availability* |     |     |     |     |     |     |     |     |     | 0xE4 Your Signature Required        | 0xF4 Off Chain Action Required                    |
+| 5.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| 6.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| 7.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| 8.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| 9.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| A.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| B.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| C.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| D.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| E.                                |                         |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     |                                                   |
+| F. Meta/Info                      | 0x0F Metadata Only      |                               |                         |                                  |                                  |     |     |     |     |     |     |     |     |     |                                     | 0xFF Data Source is Off Chain (ie: no guarantees) |
+
+* Unused regions are available for further extension or custom codes
+* You may need to scroll the tables horizontally (they're pretty wide)
+
+### Example Sequence Diagrams
+
+```
+0x03 = Waiting
+0x31 = Other Party (ie: not you) Agreed
+0x41 = Available
+0x43 = Not Yet Available
+
+
+                          Exchange
+
+
+AwesomeCoin                 DEX                     TraderBot
+     +                       +                          +
+     |                       |       buy(AwesomeCoin)   |
+     |                       | <------------------------+
+     |         buy()         |                          |
+     | <---------------------+                          |
+     |                       |                          |
+     |     Status [0x43]     |                          |
+     +---------------------> |   Status [0x03, 0x43]    |
+     |                       +------------------------> |
+     |                       |                          |
+     |                       |        isDoneYet()       |
+     |                       | <------------------------+
+     |                       |                          |
+     |                       |    Status [0x03, 0x43]   |
+     |                       +------------------------> |
+     |                       |                          |
+     |                       |                          |
+     |     Status [0x41]     |                          |
+     +---------------------> |                          |
+     |                       |                          |
+     |       buy()           |                          |
+     | <---------------------+                          |
+     |                       |                          |
+     |                       |                          |
+     |     Status [0x31]     |                          |
+     +---------------------> |      Status [0x31]       |
+     |                       +------------------------> |
+     |                       |                          |
+     |                       |                          |
+     |                       |                          |
+     |                       |                          |
+     +                       +                          +
+```
+
+
+
+```
+0x01 = Generic Success
+0x10 = Disallowed
+0x11 = Allowed
+
+                                              Token Validation
+
+
+           Buyer                  RegulatedToken           TokenValidator               IDChecker          SpendLimiter
+             +                          +                         +                         +                   +
+             |        buy()             |                         |                         |                   |
+             +------------------------> |          check()        |                         |                   |
+             |                          +-----------------------> |          check()        |                   |
+             |                          |                         +-----------------------> |                   |
+             |                          |                         |                         |                   |
+             |                          |                         |         Status [0x10]   |                   |
+             |                          |       Status [0x10]     | <-----------------------+                   |
+             |        throw/revert      | <-----------------------+                         |                   |
+             | <------------------------+                         |                         |                   |
+             |                          |                         |                         |                   |
++---------------------------+           |                         |                         |                   |
+|                           |           |                         |                         |                   |
+| Updates ID with provider  |           |                         |                         |                   |
+|                           |           |                         |                         |                   |
++---------------------------+           |                         |                         |                   |
+             |                          |                         |                         |                   |
+             |         buy()            |                         |                         |                   |
+             +------------------------> |        check()          |                         |                   |
+             |                          +-----------------------> |         check()         |                   |
+             |                          |                         +-----------------------> |                   |
+             |                          |                         |                         |                   |
+             |                          |                         |       Status [0x11]     |                   |
+             |                          |                         | <-----------------------+                   |
+             |                          |                         |                         |                   |
+             |                          |                         |                         |   check()         |
+             |                          |                         +-------------------------------------------> |
+             |                          |                         |                         |                   |
+             |                          |                         |                         |  Status [0x11]    |
+             |                          |       Status [0x11]     | <-------------------------------------------+
+             |        Status [0x01]     | <-----------------------+                         |                   |
+             | <------------------------+                         |                         |                   |
+             |                          |                         |                         |                   |
+             |                          |                         |                         |                   |
+             |                          |                         |                         |                   |
+             +                          +                         +                         +                   +
+```
 
 ## Rationale
 <!--The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.-->
