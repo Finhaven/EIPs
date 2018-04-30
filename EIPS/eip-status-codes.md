@@ -1,5 +1,5 @@
 ---
-eip: <to be assigned>
+eip: 000
 title: Status Codes
 author: Brooklyn Zelenka (@expede) <brooklyn@finhaven.com>, Tom Carchrae (@carchrae) <tom@finhaven.com>, Gleb Naumenko <gleb@finhaven.com> (@naumenkogs)
 status: Draft
