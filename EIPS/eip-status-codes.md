@@ -230,7 +230,7 @@ or greater resorces allocated to interpreting 256^4 (4.2 billion) permutations.
 ### Multiple Returns
 
 While there may be cases where packing a byte array of ESCs may make sense, the simplest,
-most forwards-compatible method of transmission is as the first value of a variadic return.
+most forwards-compatible method of transmission is as the first value of a multiple return.
 
 Familiarity is also a motivating factor. A consistent position and encoding together
 follow the principle of least surprise. It is both viewable as a "header" in the HTTP analogy,
