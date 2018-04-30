@@ -48,9 +48,35 @@ and there's no reason that ESCs couldn't be used by the EVM itself.
 
 ## Specification
 
-This ERC specifies codes, but not the specific format of exchange. For instance,
-they may be returned as a single value, apart of a data structure (ex. a call stack),
-in a variadic return, or packed into a byte array.
+### Format
+
+Codes are returned as the first value of potentially multiple return values.
+
+```solidity
+// Code only
+
+function isInt(uint num) public pure returns (byte status) {
+    return hex"01";
+}
+
+// Code and value
+
+uint8 counter;
+
+function safeIncrement(uint8 interval) public returns (byte status, uint8 newCounter) {
+    uint8 updated = counter + interval;
+
+    if (updated >= counter) {
+        counter = updated;
+        return (hex"01", updated);
+    } else {
+        return (hex"00", counter);
+    }
+}
+```
+
+In the rare case that there a multiple codes required to express an idea,
+they should be organized in asending order.
 
 ### Code Table
 
@@ -187,6 +213,15 @@ cast from `enum`s, and so on.
 Other schemes have been explored, including `bytes32` and `uint8`. They worked reasonably
 well, but not as cleanly. `uint8` feels much closer to HTTP status codes,
 does not break as cleanly as a square table (256 doesn't look as nice in base 10).
+
+### Multiple Returns
+
+While there may be cases where packing a byte array of ESCs may make sense, the simplest,
+most forwards-compatible method of transmission is as the first value of a variadic return.
+
+Familiarity is also a motivating factor. A consistent position and encoding together
+follow the principle of least surprise. It is both viewable as a "header" in the HTTP analogy,
+or like the "tag" in BEAM tagged tupples.
 
 ### Human Readable
 
