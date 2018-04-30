@@ -48,7 +48,7 @@ and there's no reason that ESCs couldn't be used by the EVM itself.
 
 ## Specification
 
-This ERC specifies codes, but not the format of exchange. For instance,
+This ERC specifies codes, but not the specific format of exchange. For instance,
 they may be returned as a single value, apart of a data structure (ex. a call stack),
 in a variadic return, or packed into a byte array.
 
