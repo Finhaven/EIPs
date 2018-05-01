@@ -256,6 +256,12 @@ The EVM also returns a status code in transactions; specifically `0x00` and `0x0
 This proposal both matches the meanings of those two codes, and could later be used
 at the EVM level.
 
+### Empty Space
+
+Much like how HTTP status codes have large unused ranges, there are totally empty
+sections in this proposal. The intent is to not impose a complete set of codes up front,
+and to allow users to suggest uses for these spaces as time progresses.
+
 ## Implementation
 
 Reference cases and helper library can be found [here](https://github.com/Finhaven/EthereumStatusCodes)
