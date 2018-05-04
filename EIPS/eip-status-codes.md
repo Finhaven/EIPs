@@ -57,13 +57,13 @@ and there's no reason that ESCs couldn't be used by the EVM itself.
 Codes are returned as the first value of potentially multiple return values.
 
 ```solidity
-// Code only
+// Status only
 
 function isInt(uint num) public pure returns (byte status) {
     return hex"01";
 }
 
-// Code and value
+// Status and value
 
 uint8 private counter;
 
