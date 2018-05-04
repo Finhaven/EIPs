@@ -19,6 +19,31 @@ in the same vein as HTTP statuses. This provides a shared contextual language
 to allow smart contracts to react to situations autonomously,
 expose localized error messages to users, and so on.
 
+```solidity
+uint256 private startTime;
+mapping(address => uint) private counters;
+
+// Before
+function increase() public returns (bool _available) {
+    if (now < startTime && counters[msg.sender] == 0) {
+        return false;
+    };
+
+    counters[msg.sender] += 1;
+    return true;
+}
+
+// After
+function increase() pubilic returns (byte _status) {
+    if (now < start) { return hex"43"; } // Not yet available
+    if (counters[msg.sender] == 0) { return hex"10"; } // Not authorized
+
+    counters[msg.sender] += 1;
+    return hex"01"; // Success
+}
+
+```
+
 ## Motivation
 
 ### Autonomy
