@@ -16,33 +16,12 @@ Broadly applicable status codes for Ethereum smart contracts.
 
 This standard provides a common set of Ethereum status codes (ESC)
 in the same vein as HTTP statuses. This provides a shared contextual language
-to allow smart contracts to react to situations autonomously,
-expose localized error messages to users, and so on.
+to allow smart contracts to react to situations autonomously, expose localized
+error messages to users, and so on.
 
-```solidity
-uint256 private startTime;
-mapping(address => uint) private counters;
-
-// Before
-function increase() public returns (bool _available) {
-    if (now < startTime && counters[msg.sender] == 0) {
-        return false;
-    };
-
-    counters[msg.sender] += 1;
-    return true;
-}
-
-// After
-function increase() pubilic returns (byte _status) {
-    if (now < start) { return hex"43"; } // Not yet available
-    if (counters[msg.sender] == 0) { return hex"10"; } // Not authorized
-
-    counters[msg.sender] += 1;
-    return hex"01"; // Success
-}
-
-```
+The current state of the art is to either `revert` and require human intervention,
+or return a boolean pass/fail status. Status codes are similar to reverting with a reason,
+but aimed at automation and translation.
 
 ## Motivation
 
@@ -126,6 +105,32 @@ they should be organized in asending order.
 
 * Unused regions are available for further extension or custom codes
 * You may need to scroll the tables horizontally (they're pretty wide)
+
+### Example Function Change
+
+```solidity
+uint256 private startTime;
+mapping(address => uint) private counters;
+
+// Before
+function increase() public returns (bool _available) {
+    if (now < startTime && counters[msg.sender] == 0) {
+        return false;
+    };
+
+    counters[msg.sender] += 1;
+    return true;
+}
+
+// After
+function increase() pubilic returns (byte _status) {
+    if (now < start) { return hex"43"; } // Not yet available
+    if (counters[msg.sender] == 0) { return hex"10"; } // Not authorized
+
+    counters[msg.sender] += 1;
+    return hex"01"; // Success
+}
+```
 
 ### Example Sequence Diagrams
 
