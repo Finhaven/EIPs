@@ -250,7 +250,7 @@ pack four codes at once, and there is a challenge in ensuring that code combinat
 are sensible. Forcing four codes into a packed representation encourages multiple
 status codes to be returned, which is often more information than strictly nessesary.
 This can lead to paradoxical results (ex `0x00` and `0x01` together),
-or greater resorces allocated to interpreting 256^4 (4.2 billion) permutations.
+or greater resorces allocated to interpreting 256<sup>4</sup> (4.2 billion) permutations.
 
 ### Multiple Returns
 
