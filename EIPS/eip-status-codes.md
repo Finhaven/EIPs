@@ -14,14 +14,25 @@ Broadly applicable status codes for Ethereum smart contracts.
 
 ## Abstract
 
-This standard provides a common set of Ethereum status codes (ESC)
-in the same vein as HTTP statuses. This provides a shared contextual language
-to allow smart contracts to react to situations autonomously, expose localized
-error messages to users, and so on.
+This standard outlines a set of Ethereum status codes (ESC) in the same vein
+as HTTP statuses. This provides a shared contextual language to allow smart contracts
+to react to situations autonomously, expose localized error messages to users, and so on.
 
 The current state of the art is to either `revert` and require human intervention,
-or return a boolean pass/fail status. Status codes are similar to reverting with a reason,
-but aimed at automation and translation.
+or return a Boolean pass/fail status. Status codes are similar to reverting with a reason,
+and events, but are aimed at on-chain automation and translation.
+
+While clearly related, status codes are orthogonal to "`revert` with reason".
+ESCs are not limited to rolling back the transaction, and may represent
+known error states without halting execution. They may also represt off-chain conditions,
+supply a string to `revert`, signal time delays, and more.
+
+Much like HTTP codes, having a standard set of known codes has many benefits for developers.
+They remove friction from needing to develop your own schemes for every contract,
+makes inter-contract automation easier, and makes it easier to broadly understand which of the
+finite states your request produced. Importantly, it makes it much easier to distinguish
+between expected errors states, and truly exceptional conditions that require
+halting execution and rolling back state.
 
 ## Motivation
 
@@ -38,7 +49,7 @@ and tagged tuples to signify much the same information. Both provide a lot of
 information both to the programmer (debugging for instance), and to the program
 that needs to decide what to do next.
 
-ESCs convey a much richer set of information than booleans,
+ESCs convey a much richer set of information than Booleans,
 and are able to be reacted to autonomously unlike arbitrary strings.
 
 ### User Feedback
