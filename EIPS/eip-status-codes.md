@@ -19,7 +19,7 @@ vein as HTTP statuses. This provides a shared set of signals to allow smart cont
 to react to situations autonomously, expose localized error messages to users, and so on.
 
 The current state of the art is to either `revert` and require human intervention,
-or return a boolean pass/fail status. Status codes are similar-but-orthogonal
+or return a Boolean pass/fail status. Status codes are similar-but-orthogonal
 to `revert`ing with a reason, but aimed at automation and translation.
 
 As is the case with HTTP, having a standard set of known codes has many benefits for developers.
