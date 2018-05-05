@@ -19,8 +19,8 @@ vein as HTTP statuses. This provides a shared set of signals to allow smart cont
 to react to situations autonomously, expose localized error messages to users, and so on.
 
 The current state of the art is to either `revert` and require human intervention,
-or return a boolean pass/fail status. Status codes are similar to `revert`ing with a reason,
-but aimed at automation and translation.
+or return a boolean pass/fail status. Status codes are similar-but-orthogonal
+to `revert`ing with a reason, but aimed at automation and translation.
 
 Much like HTTP codes, having a standard set of known codes has many benefits for developers.
 They remove friction from needing to develop your own schemes for every contract,
@@ -56,9 +56,9 @@ differing levels of technical detail, added as `revert` messages, natspecs, and 
 We also see a desire for this [in transactions](http://eips.ethereum.org/EIPS/eip-658),
 and there's no reason that ESCs couldn't be used by the EVM itself.
 
-### More than Exceptions
+### More than Pass/Fail
 
-While clearly related, status codes are orthogonal to "revert with reason".
+While clearly related, status codes are complementary to "revert with reason".
 ESCs are not limited to rolling back the transaction, and may represent known error states
 without halting execution. They may also represent off-chain conditions,
 supply a string to revert, signal time delays, and more.
