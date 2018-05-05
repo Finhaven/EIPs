@@ -32,7 +32,7 @@ They remove friction from needing to develop your own schemes for every contract
 makes inter-contract automation easier, and makes it easier to broadly understand which of the
 finite states your request produced. Importantly, it makes it much easier to distinguish
 between expected errors states, and truly exceptional conditions that require
-halting execution and rolling back state.
+halting execution.
 
 ## Motivation
 
