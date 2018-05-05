@@ -22,7 +22,7 @@ The current state of the art is to either `revert` and require human interventio
 or return a boolean pass/fail status. Status codes are similar-but-orthogonal
 to `revert`ing with a reason, but aimed at automation and translation.
 
-Much like HTTP codes, having a standard set of known codes has many benefits for developers.
+As is the case with HTTP, having a standard set of known codes has many benefits for developers.
 They remove friction from needing to develop your own schemes for every contract,
 makes inter-contract automation easier, and makes it easier to broadly understand
 which of the finite states your request produced. Importantly, it makes it much easier
