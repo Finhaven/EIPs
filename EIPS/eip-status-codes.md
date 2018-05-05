@@ -24,7 +24,7 @@ and events, but are aimed at on-chain automation and translation.
 
 While clearly related, status codes are orthogonal to "`revert` with reason".
 ESCs are not limited to rolling back the transaction, and may represent
-known error states without halting execution. They may also represt off-chain conditions,
+known error states without halting execution. They may also represent off-chain conditions,
 supply a string to `revert`, signal time delays, and more.
 
 Much like HTTP codes, having a standard set of known codes has many benefits for developers.
