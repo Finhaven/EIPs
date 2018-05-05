@@ -14,25 +14,21 @@ Broadly applicable status codes for Ethereum smart contracts.
 
 ## Abstract
 
-This standard outlines a set of Ethereum status codes (ESC) in the same vein
-as HTTP statuses. This provides a shared contextual language to allow smart contracts
-to react to situations autonomously, expose localized error messages to users, and so on.
+This standard outlines a common set of Ethereum status codes (ESC)
+in the same vein as HTTP statuses. This provides a shared contextual language
+to allow smart contracts to react to situations autonomously,
+expose localized error messages to users, and so on.
 
-The current state of the art is to either `revert` and require human intervention,
-or return a Boolean pass/fail status. Status codes are similar to reverting with a reason,
-and events, but are aimed at on-chain automation and translation.
-
-While clearly related, status codes are orthogonal to "`revert` with reason".
-ESCs are not limited to rolling back the transaction, and may represent
-known error states without halting execution. They may also represent off-chain conditions,
-supply a string to `revert`, signal time delays, and more.
+The current state of the art is to either revert and require human intervention,
+or return a boolean pass/fail status. Status codes are similar to reverting with a reason,
+but aimed at automation and translation.
 
 Much like HTTP codes, having a standard set of known codes has many benefits for developers.
 They remove friction from needing to develop your own schemes for every contract,
-makes inter-contract automation easier, and makes it easier to broadly understand which of the
-finite states your request produced. Importantly, it makes it much easier to distinguish
-between expected errors states, and truly exceptional conditions that require
-halting execution.
+makes inter-contract automation easier, and makes it easier to broadly understand
+which of the finite states your request produced. Importantly, it makes it much easier
+to distinguish between expected errors states, and truly exceptional conditions
+that require halting execution.
 
 ## Motivation
 
@@ -60,6 +56,13 @@ differing levels of technical detail, added as `revert` messages, natspecs, and 
 
 We also see a desire for this [in transactions](http://eips.ethereum.org/EIPS/eip-658),
 and there's no reason that ESCs couldn't be used by the EVM itself.
+
+### More than Exceptions
+
+While clearly related, status codes are orthogonal to "revert with reason".
+ESCs are not limited to rolling back the transaction, and may represent known error states
+without halting execution. They may also represent off-chain conditions,
+supply a string to revert, signal time delays, and more.
 
 ## Specification
 
