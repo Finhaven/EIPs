@@ -134,7 +134,7 @@ function increase() public returns (bool _available) {
 }
 
 // After
-function increase() pubilic returns (byte _status) {
+function increase() public returns (byte _status) {
     if (now < start) { return hex"43"; } // Not yet available
     if (counters[msg.sender] == 0) { return hex"10"; } // Not authorized
 
